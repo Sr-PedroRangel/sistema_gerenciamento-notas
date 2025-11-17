@@ -38,42 +38,10 @@ mostrar_resultado(nome, media, situacao) → exibe as informações formatadas.
 
 Objetivo: perceber a clareza e a reutilização do código'''
 
-def ler_notas():
-    nome = input("Digite o nome do aluno: ").strip()
-
-    lista = []
-    nota1 = float(input("Digite a 1° nota do aluno: ").replace(",", "."))
-    lista.append(nota1)
-
-    nota2 = float(input("Digite a 2° nota do aluno: ").replace(",", "."))
-    lista.append(nota2)
-
-    nota3 = float(input("Digite a 3° nota do aluno: ").replace(",", "."))
-    lista.append(nota3)
-
-    return nome, lista
+from funcoes import ler_notas, calcular_media, verificar_situacao, mostrar_resultado
 
 
-def calcular_media(notas: list[float]):
-    soman = 0
-    for n in notas:
-        soman += n
-    return soman / 3
-
-
-def verificar_situacao(media):
-    if media >= 7:
-        return "Aprovado"
-    elif 5 <= media <= 6.9:
-        return "Recuperação"
-    else:
-        return "Reprovado"
-
-
-def mostrar_resultado(nome, media, situacao):
-    print(f"\nA média do aluno {nome} é {media:.2f}, e ele foi {situacao}\n")
-
-
+resultados = []   # EXTRA 1
 
 while True:
     op = input("Deseja inserir um aluno? (Para encerrar, digite 'sair'): ").lower().strip()
@@ -84,3 +52,18 @@ while True:
     media = calcular_media(lista)
     situacao = verificar_situacao(media)
     mostrar_resultado(nome, media, situacao)
+
+
+    resultados.append((nome, media, situacao))
+
+
+
+print("\n===== RESUMO GERAL DOS ALUNOS CADASTRADOS =====\n")
+
+if len(resultados) == 0:
+    print("Nenhum aluno foi registrado.")
+else:
+    for nome, media, situacao in resultados:
+        print(f"Aluno: {nome} | Média: {media:.2f} | Situação: {situacao}")
+
+
